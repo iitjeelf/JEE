@@ -370,9 +370,14 @@ function submitExam(){
     html+=`<tr><td>${s}</td><td>${v.correct}</td><td>${v.wrong}</td><td>${v.blank}</td><td>${v.total}</td><td>${per}%</td></tr>`;
   }
 
-  let totalPer=((totalCorrect/totalQs)*100).toFixed(2);
-  
-sendToGoogleSheet(s, v.correct, v.wrong, v.blank, v.total, per);
+ let totalPer=((totalCorrect/totalQs)*100).toFixed(2);
+
+// Send EACH subject's data to Google Sheet
+for (let s in subjData) {
+    let v = subjData[s];
+    let per = ((v.correct / v.total) * 100).toFixed(2);
+    sendToGoogleSheet(s, v.correct, v.wrong, v.blank, v.total, per);
+}
 
   html+=`<tr style="font-weight:bold;background:#D8BFD8;">
     <td>Total</td><td>${totalCorrect}</td><td>${totalWrong}</td><td>${totalBlank}</td><td>${totalQs}</td><td>${totalPer}%</td>
