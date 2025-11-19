@@ -179,27 +179,33 @@ let images=["1.png","2.png","3.png","4.png","5.png","6.png","7.png","8.png","9.p
 let answerKey=["A","B","C","D","A","B","C","D","A","B","C","D","A","B","C","D","A","B","C","D","A","B","C","D","A","B","C","D","A","B","C","D","A","B","C","D","A","B","C","D","A","B","C","D","A","B","C","D","A","B"];
 const subjects=["Maths","Physics","Chemistry"];
 /* GOOGLE SHEET FUNCTION */
+/* GOOGLE SHEET FUNCTION (FIXED) */
 function sendToGoogleSheet(subject, correct, wrong, blank, total, percentage) {
     const url = "https://script.google.com/macros/s/AKfycbx8kj7t2rTAzgxvzFZoSYSjIGyJcOYQyk6R08ewYV6EeV0Hq-1MwPCirhQF20uak7M-/exec";
 
     const payload = {
-      name: progress.student.name,
-      section: progress.student.sec,
-      roll: progress.student.roll,
-      adm: progress.student.adm,
-      subject: subject,
-      correct: correct,
-      wrong: wrong,
-      blank: blank,
-      total: total,
-      percentage: percentage
+        name: progress.student.name,
+        section: progress.student.sec,
+        roll: progress.student.roll,
+        adm: progress.student.adm,
+        subject: subject,
+        correct: correct,
+        wrong: wrong,
+        blank: blank,
+        total: total,
+        percentage: percentage
     };
 
     fetch(url, {
         method: "POST",
+        mode: "no-cors",
+        headers: {
+            "Content-Type": "application/json"
+        },
         body: JSON.stringify(payload)
     });
 }
+
   
 let examData={files:[],subjectNames:[],keys:[]};
 let progress=null,timerInterval=null;
